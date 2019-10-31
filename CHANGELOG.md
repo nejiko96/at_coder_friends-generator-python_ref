@@ -2,4 +2,4 @@
 
 ## master(unreleased)
 
-### New features
+- Initial implementation

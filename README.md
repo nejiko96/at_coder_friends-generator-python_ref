@@ -1,8 +1,7 @@
 # AtCoderFriends::Generator::PythonRef
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/at_coder_friends/generator/python_ref`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Python source generator for [AtCoderFriends](https://github.com/nejiko96/at_coder_friends).  
+(This is reference implementation)
 
 ## Installation
 
@@ -20,9 +19,30 @@ Or install it yourself as:
 
     $ gem install at_coder_friends-generator-python_ref
 
-## Usage
+## Configuration
 
-TODO: Write usage instructions here
+Add ```PythonRef``` to ```generators``` setting in ```.at_coder_friends.yml```:
+  ```YAML
+  generators:
+    - PythonRef
+  ```
+
+## Generator Options
+
+You can set following options to ```generator_settings/PythonRef``` setting  
+in ```.at_coder_friends.yml```:
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+|default_template|Source template file path|[/templates/python_ref_default.py](/templates/python_ref_default.py)|
+|interactive_template|Source template file path for interactive problems|[/templates/python_ref_interactive.py](/templates/python_ref_interactive.py)|
+
+### Example
+  ```YAML
+  generator_settings:
+    PythonRef:
+      default_template: /path/to/template
+  ```
 
 ## Development
 
