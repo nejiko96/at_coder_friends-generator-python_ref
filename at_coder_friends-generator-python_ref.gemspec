@@ -33,9 +33,11 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.3.0'
 
-  spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = spec.homepage
-  spec.metadata['changelog_uri'] = spec.homepage + '/CHANGELOG.md'
+  spec.metadata = {
+    'homepage_uri' => spec.homepage,
+    'source_code_uri' => spec.homepage,
+    'changelog_uri' => 'https://github.com/nejiko96/at_coder_friends-generator-python_ref/blob/master/CHANGELOG.md'
+  }
 
   spec.add_development_dependency 'at_coder_friends', '~> 0.6'
   spec.add_development_dependency 'bundler', '~> 2.0'
