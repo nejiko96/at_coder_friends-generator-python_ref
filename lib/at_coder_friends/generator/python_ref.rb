@@ -122,7 +122,7 @@ module AtCoderFriends
       def gen_expr(item, split)
         case item
         when :number
-          split ? 'map(int, input().split())' : 'int(input())'
+          split ? 'list(map(int, input().split()))' : 'int(input())'
         when :string
           split ? 'input().split()' : 'input()'
         when :char

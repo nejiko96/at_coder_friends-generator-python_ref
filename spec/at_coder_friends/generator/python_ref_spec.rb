@@ -100,7 +100,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:item) { :number }
       let(:names) { %w[A B] }
       it 'generates decl' do
-        expect(subject).to eq('A, B = map(int, input().split())')
+        expect(subject).to eq('A, B = list(map(int, input().split()))')
       end
     end
 
@@ -125,7 +125,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:container) { :harray }
       let(:item) { :number }
       it 'generates decl' do
-        expect(subject).to eq('As = map(int, input().split())')
+        expect(subject).to eq('As = list(map(int, input().split()))')
       end
     end
 
@@ -174,7 +174,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
             'As = [None for _ in range(N)]',
             'Bs = [None for _ in range(N)]',
             'for i in range(N):',
-            '    As[i], Bs[i] = map(int, input().split())'
+            '    As[i], Bs[i] = list(map(int, input().split()))'
           ]
         )
       end
@@ -203,7 +203,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:size) { %w[R C] }
       it 'generates decl' do
         expect(subject).to eq(
-          'Ass = [map(int, input().split()) for _ in range(R)]'
+          'Ass = [list(map(int, input().split())) for _ in range(R)]'
         )
       end
     end
@@ -294,7 +294,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
             xs = [None for _ in range(N)]
             ys = [None for _ in range(N)]
             for i in range(N):
-                xs[i], ys[i] = map(int, input().split())
+                xs[i], ys[i] = list(map(int, input().split()))
             Q = input()
             as = input().split()
 
@@ -330,7 +330,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
 
             MOD = 2**32
 
-            N, Q = map(int, input().split())
+            N, Q = list(map(int, input().split()))
 
             print(ans)
           SRC
