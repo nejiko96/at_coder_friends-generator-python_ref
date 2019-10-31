@@ -1,4 +1,7 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-# Specify your gem's dependencies in at_coder_friends-generator-python_ref.gemspec
+source 'https://rubygems.org'
+
+# Specify your gem's dependencies in
+# at_coder_friends-generator-python_ref.gemspec
 gemspec

@@ -1,4 +1,6 @@
-require "at_coder_friends/generator/python_ref/version"
+# frozen_string_literal: true
+
+require 'at_coder_friends/generator/python_ref/version'
 
 module AtCoderFriends
   module Generator
