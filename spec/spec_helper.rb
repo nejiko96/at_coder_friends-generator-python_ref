@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'at_coder_friends'
 require 'at_coder_friends/generator/python_ref'
 
 RSpec.configure do |config|

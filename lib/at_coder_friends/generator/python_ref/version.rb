@@ -2,7 +2,7 @@
 
 module AtCoderFriends
   module Generator
-    module PythonRef
+    class PythonRef
       VERSION = '0.1.0'
     end
   end
