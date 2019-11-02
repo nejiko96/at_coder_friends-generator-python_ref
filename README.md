@@ -22,26 +22,28 @@ Or install it yourself as:
 ## Configuration
 
 Add ```PythonRef``` to ```generators``` setting in ```.at_coder_friends.yml```:
-  ```YAML
-  generators:
-    - PythonRef
-  ```
 
 ## Generator Options
 
-You can set following options to ```generator_settings/PythonRef``` setting  
-in ```.at_coder_friends.yml```:
+Following options are available  
+in ```generator_settings/PythonRef``` section of ```.at_coder_friends.yml```:
 
-| Setting | Description | Default |
+| Option | Description | Default |
 |---------|-------------|---------|
 |default_template|Source template file path|[/templates/python_ref_default.py](/templates/python_ref_default.py)|
 |interactive_template|Source template file path for interactive problems|[/templates/python_ref_interactive.py](/templates/python_ref_interactive.py)|
 
-### Example
+## Setting example for python user
   ```YAML
+  generators:
+    - PythonRef
   generator_settings:
     PythonRef:
       default_template: /path/to/template
+  ext_settings:
+    'py':
+      test_cmd:
+        default: 'python "{dir}/{base}.py"'
   ```
 
 ## Development
