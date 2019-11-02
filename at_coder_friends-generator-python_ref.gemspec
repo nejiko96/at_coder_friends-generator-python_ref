@@ -12,8 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Python generator for AtCoderFriends'
   spec.description   = <<-DESCRIPTION
-  AtCoderFriends plugin
-  which Generates Python source from problem description
+  Python source generator works as a plugin for AtCoderFriends
   (reference implementation)
   DESCRIPTION
   spec.homepage      = 'https://github.com/nejiko96/at_coder_friends-generator-python_ref'
