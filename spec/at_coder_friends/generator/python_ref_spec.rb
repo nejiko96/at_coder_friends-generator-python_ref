@@ -2,62 +2,20 @@
 
 RSpec.describe AtCoderFriends::Generator::PythonRef do
   it 'has a version number' do
-    expect(AtCoderFriends::Generator::PythonRef::VERSION).not_to be nil
+    expect(described_class::VERSION).not_to be nil
   end
-
-  TMPL_DIR = File.realpath(File.join(__dir__, '..', '..', '..', 'templates'))
 
   subject(:generator) { described_class.new(cfg) }
   let(:cfg) { nil }
 
-  describe '#select_template' do
-    subject { generator.select_template(interactive) }
+  describe '#process' do
+    subject { generator.process(pbm) }
+    let(:pbm) { AtCoderFriends::Problem.new('A') }
+    let(:ext) { pbm.sources[0].ext }
 
-    context 'with default configuration' do
-      context 'for interactive problems' do
-        let(:interactive) { true }
-
-        it 'returns template file name' do
-          expect(subject).to eq(
-            File.join(TMPL_DIR, 'python_ref_interactive.py')
-          )
-        end
-      end
-
-      context 'for other problems' do
-        let(:interactive) { false }
-
-        it 'returns template file name' do
-          expect(subject).to eq(
-            File.join(TMPL_DIR, 'python_ref_default.py')
-          )
-        end
-      end
-    end
-
-    context 'with custom configuration' do
-      let(:cfg) do
-        {
-          'default_template' => 'customized_default.py',
-          'interactive_template' => 'customized_interactive.py'
-        }
-      end
-
-      context 'for interactive problems' do
-        let(:interactive) { true }
-
-        it 'returns template file name' do
-          expect(subject).to eq('customized_interactive.py')
-        end
-      end
-
-      context 'for other problems' do
-        let(:interactive) { false }
-
-        it 'returns template file name' do
-          expect(subject).to eq('customized_default.py')
-        end
-      end
+    it 'returns generator specific extension' do
+      subject
+      expect(ext).to match(:py)
     end
   end
 
@@ -225,24 +183,38 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
         expect(subject).to eq('Ass = [input() for _ in range(R)]')
       end
     end
-  end
 
-  describe '#gen_output' do
-    subject { generator.gen_output(vs) }
-
-    context 'for a general problem' do
-      let(:vs) { nil }
-
-      it 'generates output script' do
-        expect(subject).to eq('print(ans)')
+    context 'for a jagged array of numbers' do
+      let(:container) { :varray_matrix }
+      let(:item) { :number }
+      let(:names) { %w[K A] }
+      let(:size) { %w[N K_N] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'Ks = [None for _ in range(N)]',
+            'Ass = [None for _ in range(N)]',
+            'for i in range(N):',
+            '    Ks[i], *Ass[i] = list(map(int, input().split()))'
+          ]
+        )
       end
     end
 
-    context 'for a binary problem' do
-      let(:vs) { %w[Yes No] }
-
-      it 'generates output script' do
-        expect(subject).to eq("print('Yes' if cond else 'No')")
+    context 'for a jagged array of characters' do
+      let(:container) { :varray_matrix }
+      let(:item) { :char }
+      let(:names) { %w[K p] }
+      let(:size) { %w[Q 26] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'Ks = [None for _ in range(Q)]',
+            'pss = [None for _ in range(Q)]',
+            'for i in range(Q):',
+            '    Ks[i], pss[i] = input().split()'
+          ]
+        )
       end
     end
   end
@@ -251,9 +223,10 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
     subject { generator.generate(pbm) }
     let(:pbm) do
       AtCoderFriends::Problem.new('A') do |pbm|
-        pbm.formats = formats
+        pbm.formats_src = formats
         pbm.constants = constants
         pbm.options.interactive = interactive
+        pbm.options.binary_values = binary_values
       end
     end
 
@@ -265,11 +238,15 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
       let(:formats) do
         [
-          AtCoderFriends::Problem::InputFormat.new(:single, :number, %w[N]),
+          AtCoderFriends::Problem::InputFormat.new(
+            :single, :number, %w[N], []
+          ),
           AtCoderFriends::Problem::InputFormat.new(
             :varray, :number, %w[x y], %w[N]
           ),
-          AtCoderFriends::Problem::InputFormat.new(:single, :string, %w[Q]),
+          AtCoderFriends::Problem::InputFormat.new(
+            :single, :string, %w[Q], []
+          ),
           AtCoderFriends::Problem::InputFormat.new(
             :harray, :string, %w[a], %w[Q]
           )
@@ -282,8 +259,9 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
         ]
       end
       let(:interactive) { false }
+      let(:binary_values) { nil }
 
-      it 'generates ruby source' do
+      it 'generates source' do
         expect(subject).to eq(
           <<~SRC
             # https://atcoder.jp/contests/practice/tasks/practice_1
@@ -312,7 +290,9 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
       let(:formats) do
         [
-          AtCoderFriends::Problem::InputFormat.new(:single, :number, %w[N Q])
+          AtCoderFriends::Problem::InputFormat.new(
+            :single, :number, %w[N Q], []
+          )
         ]
       end
       let(:constants) do
@@ -322,8 +302,9 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
         ]
       end
       let(:interactive) { true }
+      let(:binary_values) { nil }
 
-      it 'generates ruby source' do
+      it 'generates source' do
         expect(subject).to eq(
           <<~'SRC'
             # https://atcoder.jp/contests/practice/tasks/practice_2
@@ -335,6 +316,41 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
             print(ans)
           SRC
         )
+      end
+
+      context 'for a binary problem' do
+        before do
+          allow(pbm).to receive(:url) do
+            'https://atcoder.jp/contests/abc006/tasks/abc006_1'
+          end
+        end
+        let(:formats) do
+          [
+            AtCoderFriends::Problem::InputFormat.new(
+              :single, :number, %w[N], []
+            )
+          ]
+        end
+        let(:constants) do
+          [
+            AtCoderFriends::Problem::Constant.new('N', :max, '9')
+          ]
+        end
+        let(:interactive) { false }
+        let(:binary_values) { %w[YES NO] }
+
+        it 'generates source' do
+          expect(subject).to eq(
+            <<~'SRC'
+              # https://atcoder.jp/contests/abc006/tasks/abc006_1
+
+
+              N = int(input())
+
+              print('YES' if cond else 'NO')
+            SRC
+          )
+        end
       end
     end
   end

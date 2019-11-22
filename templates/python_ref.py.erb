@@ -1,0 +1,14 @@
+# ### URL ###
+
+### CONSTS ###
+
+### DCLS ###
+
+<%
+vs = pbm.options.binary_values
+if vs
+%>print('<%= vs[0] %>' if cond else '<%= vs[1] %>')<%
+else
+%>print(ans)<%
+end
+%>
