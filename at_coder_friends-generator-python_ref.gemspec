@@ -6,7 +6,7 @@ require 'at_coder_friends/generator/python_ref/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'at_coder_friends-generator-python_ref'
-  spec.version       = AtCoderFriends::Generator::PythonRef::VERSION
+  spec.version       = AtCoderFriends::Generator::PythonRefConstants::VERSION
   spec.authors       = ['nejiko96']
   spec.email         = ['nejiko2006@gmail.com']
 
@@ -38,7 +38,8 @@ Gem::Specification.new do |spec|
     'changelog_uri' => 'https://github.com/nejiko96/at_coder_friends-generator-python_ref/blob/master/CHANGELOG.md'
   }
 
-  spec.add_development_dependency 'at_coder_friends', '~> 0.6'
+  spec.add_dependency 'at_coder_friends', '~> 0.6.3'
+
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'

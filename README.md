@@ -30,10 +30,9 @@ in ```generator_settings/PythonRef``` section of ```.at_coder_friends.yml```:
 
 | Option | Description | Default |
 |---------|-------------|---------|
-|default_template|Source template file path|[/templates/python_ref_default.py](/templates/python_ref_default.py)|
-|interactive_template|Source template file path for interactive problems|[/templates/python_ref_interactive.py](/templates/python_ref_interactive.py)|
+|default_template|Source template file path|[/templates/python_ref.py.erb](/templates/python_ref.py.erb)|
 
-## Setting example for python user
+## ```.at_coder_friends.yml``` example for Python
   ```YAML
   generators:
     - PythonRef

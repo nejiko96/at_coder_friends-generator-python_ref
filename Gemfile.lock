@@ -2,13 +2,14 @@ PATH
   remote: .
   specs:
     at_coder_friends-generator-python_ref (0.1.0)
+      at_coder_friends (~> 0.6.3)
 
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    at_coder_friends (0.6.1)
+    at_coder_friends (0.6.3)
       colorize (~> 0.8.1)
       launchy (~> 2.4.3)
       mechanize (~> 2.0)
@@ -37,7 +38,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
-    nokogiri (1.10.4)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     ntlm-http (0.1.1)
     public_suffix (4.0.1)
@@ -62,9 +63,9 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
-  at_coder_friends (~> 0.6)
   at_coder_friends-generator-python_ref!
   bundler (~> 2.0)
   rake (~> 10.0)
