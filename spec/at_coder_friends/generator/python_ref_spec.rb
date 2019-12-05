@@ -184,7 +184,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
     end
 
-    context 'for a jagged array of numbers' do
+    context 'for a vertical array and a matrix of numbers' do
       let(:container) { :varray_matrix }
       let(:item) { :number }
       let(:names) { %w[K A] }
@@ -201,7 +201,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
     end
 
-    context 'for a jagged array of characters' do
+    context 'for a vertical array and a matrix characters' do
       let(:container) { :varray_matrix }
       let(:item) { :char }
       let(:names) { %w[K p] }
@@ -213,6 +213,60 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
             'pss = [None for _ in range(Q)]',
             'for i in range(Q):',
             '    Ks[i], pss[i] = input().split()'
+          ]
+        )
+      end
+    end
+
+    context 'for a matrix and a vertical array of numbers' do
+      let(:container) { :matrix_varray }
+      let(:item) { :number }
+      let(:names) { %w[city cost] }
+      let(:size) { %w[M 2] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'cityss = [None for _ in range(M)]',
+            'costs = [None for _ in range(M)]',
+            'for i in range(M):',
+            '    *cityss[i], costs[i] = list(map(int, input().split()))'
+          ]
+        )
+      end
+    end
+
+    context 'for vertically expanded matrices(number)' do
+      let(:container) { :vmatrix }
+      let(:item) { :number }
+      let(:names) { %w[idol p] }
+      let(:size) { %w[1 C_1] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'idolss = [[None for _ in range(C_1)] for _ in range(1)]',
+            'pss = [[None for _ in range(C_1)] for _ in range(1)]',
+            'for i in range(1):',
+            '    for j in range(C_1):',
+            '        idolss[i][j], pss[i][j] = list(map(int, input().split()))'
+          ]
+        )
+      end
+    end
+
+    context 'for horizontally expanded matrices(number)' do
+      let(:container) { :hmatrix }
+      let(:item) { :number }
+      let(:names) { %w[x y] }
+      let(:size) { %w[Q 2] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'xss = [None for _ in range(Q)]',
+            'yss = [None for _ in range(Q)]',
+            'for i in range(Q):',
+            '    line = list(map(int, input().split()))',
+            '    xss[i] = line[0::2]',
+            '    yss[i] = line[1::2]'
           ]
         )
       end

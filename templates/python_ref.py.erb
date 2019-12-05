@@ -5,8 +5,7 @@
 ### DCLS ###
 
 <%
-vs = pbm.options.binary_values
-if vs
+if (vs = pbm.options.binary_values)
 %>print('<%= vs[0] %>' if cond else '<%= vs[1] %>')<%
 else
 %>print(ans)<%

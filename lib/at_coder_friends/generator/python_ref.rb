@@ -50,8 +50,12 @@ module AtCoderFriends
           gen_varray_decl(inpdef)
         when :matrix
           gen_matrix_decl(inpdef)
-        when :varray_matrix
-          gen_varray_matrix_decl(inpdef)
+        when :varray_matrix, :matrix_varray
+          gen_cmb_decl(inpdef)
+        when :vmatrix
+          gen_vmatrix_decl(inpdef)
+        when :hmatrix
+          gen_hmatrix_decl(inpdef)
         end
       end
 
@@ -105,18 +109,49 @@ module AtCoderFriends
         "#{decl} = [#{expr} for _ in range(#{sz})]"
       end
 
-      def gen_varray_matrix_decl(inpdef)
+      def gen_cmb_decl(inpdef)
+        mx = inpdef.container == :varray_matrix ? -1 : 0
         vs = inpdef.names.map { |v| "#{v}s" }
-        vs[-1] += 's'
+        vs[mx] += 's'
         sz = inpdef.size[0]
         dcls = vs.map { |v| "#{v}[i]" }
-        dcls[-1] = '*' + dcls[-1] unless inpdef.item == :char
+        dcls[mx] = '*' + dcls[mx] unless inpdef.item == :char
         dcl = dcls.join(', ')
-        expr = gen_varray_matrix_expr(inpdef.item)
+        expr = gen_cmb_expr(inpdef.item)
         ret = []
         ret += vs.map { |v| "#{v} = [None for _ in range(#{sz})]" }
         ret << "for i in range(#{sz}):"
         ret << "    #{dcl} = #{expr}"
+        ret
+      end
+
+      def gen_vmatrix_decl(inpdef)
+        names = inpdef.names
+        sz1, sz2 = inpdef.size
+        dcl = names.map { |v| "#{v}ss[i][j]" }.join(', ')
+        expr = gen_expr(inpdef.item, true)
+        ret = []
+        ret += names.map do |v|
+          "#{v}ss = [[None for _ in range(#{sz2})] for _ in range(#{sz1})]"
+        end
+        ret << "for i in range(#{sz1}):"
+        ret << "    for j in range(#{sz2}):"
+        ret << "        #{dcl} = #{expr}"
+        ret
+      end
+
+      def gen_hmatrix_decl(inpdef)
+        names = inpdef.names
+        sz = inpdef.size[0]
+        dcls = names.map { |v| "#{v}ss[i]" }
+        expr = gen_expr(inpdef.item, true)
+        ret = []
+        ret += names.map { |v| "#{v}ss = [None for _ in range(#{sz})]" }
+        ret << "for i in range(#{sz}):"
+        ret << "    line = #{expr}"
+        ret += dcls.map.with_index do |dcl, i|
+          "    #{dcl} = line[#{i}::#{dcls.size}]"
+        end
         ret
       end
 
@@ -131,7 +166,7 @@ module AtCoderFriends
         end
       end
 
-      def gen_varray_matrix_expr(item)
+      def gen_cmb_expr(item)
         case item
         when :number
           'list(map(int, input().split()))'
