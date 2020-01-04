@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Configuration
 
-Add ```PythonRef``` to ```generators``` setting in ```.at_coder_friends.yml```:
+Add ```PythonRef``` to ```generators``` setting in ```.at_coder_friends.yml```
 
 ## Generator Options
 

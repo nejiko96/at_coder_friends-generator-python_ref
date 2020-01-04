@@ -2,8 +2,10 @@
 
 ## master (unreleased)
 
+## 0.2.0 (2020-01-05)
+
 ### Added
-- at_coder_friends 0.6.3(next release) support
+- at_coder_friends 0.6.3 support
 - 'vertical array + matrix' input format support.
 - 'matrix + vertical array' input format support.
 - 'vertically expanded matrices' input format support.
