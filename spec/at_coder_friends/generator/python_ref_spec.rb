@@ -5,8 +5,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
     expect(described_class::VERSION).not_to be nil
   end
 
-  subject(:generator) { described_class.new(cfg) }
-  let(:cfg) { nil }
+  subject(:generator) { described_class.new }
 
   describe '#process' do
     subject { generator.process(pbm) }
@@ -40,10 +39,17 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
   describe '#gen_decl' do
     subject { generator.gen_decl(inpdef) }
     let(:inpdef) do
-      AtCoderFriends::Problem::InputFormat.new(container, item, names, size)
+      AtCoderFriends::Problem::InputFormat.new(
+        container: container,
+        item: item,
+        names: names,
+        size: size,
+        delim: delim
+      )
     end
     let(:names) { %w[A] }
     let(:size) { [] }
+    let(:delim) { '' }
 
     context 'for a plain number' do
       let(:container) { :single }
@@ -59,6 +65,23 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[A B] }
       it 'generates decl' do
         expect(subject).to eq('A, B = list(map(int, input().split()))')
+      end
+    end
+
+    context 'for a plain decimal' do
+      let(:container) { :single }
+      let(:item) { :decimal }
+      it 'generates decl' do
+        expect(subject).to eq('A = float(input())')
+      end
+    end
+
+    context 'for plain decimals' do
+      let(:container) { :single }
+      let(:item) { :decimal }
+      let(:names) { %w[A B] }
+      it 'generates decl' do
+        expect(subject).to eq('A, B = list(map(float, input().split()))')
       end
     end
 
@@ -87,6 +110,14 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
     end
 
+    context 'for a horizontal array of decimals' do
+      let(:container) { :harray }
+      let(:item) { :decimal }
+      it 'generates decl' do
+        expect(subject).to eq('As = list(map(float, input().split()))')
+      end
+    end
+
     context 'for a horizontal array of strings' do
       let(:container) { :harray }
       let(:item) { :string }
@@ -109,6 +140,15 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:size) { %w[N] }
       it 'generates decl' do
         expect(subject).to eq('As = [int(input()) for _ in range(N)]')
+      end
+    end
+
+    context 'for single vertical array of decimals' do
+      let(:container) { :varray }
+      let(:item) { :decimal }
+      let(:size) { %w[N] }
+      it 'generates decl' do
+        expect(subject).to eq('As = [float(input()) for _ in range(N)]')
       end
     end
 
@@ -138,6 +178,23 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
     end
 
+    context 'for multiple vertical array of decimals' do
+      let(:container) { :varray }
+      let(:item) { :decimal }
+      let(:names) { %w[A B] }
+      let(:size) { %w[N] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'As = [None for _ in range(N)]',
+            'Bs = [None for _ in range(N)]',
+            'for i in range(N):',
+            '    As[i], Bs[i] = list(map(float, input().split()))'
+          ]
+        )
+      end
+    end
+
     context 'for multple vertical array of strings' do
       let(:container) { :varray }
       let(:item) { :string }
@@ -162,6 +219,17 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       it 'generates decl' do
         expect(subject).to eq(
           'Ass = [list(map(int, input().split())) for _ in range(R)]'
+        )
+      end
+    end
+
+    context 'for a matrix of decimals' do
+      let(:container) { :matrix }
+      let(:item) { :decimal }
+      let(:size) { %w[R C] }
+      it 'generates decl' do
+        expect(subject).to eq(
+          'Ass = [list(map(float, input().split())) for _ in range(R)]'
         )
       end
     end
@@ -201,7 +269,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
     end
 
-    context 'for a vertical array and a matrix characters' do
+    context 'for a vertical array and a matrix of characters' do
       let(:container) { :varray_matrix }
       let(:item) { :char }
       let(:names) { %w[K p] }
@@ -271,6 +339,24 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
         )
       end
     end
+
+    context 'for format with delimiters' do
+      let(:container) { :varray }
+      let(:item) { :number }
+      let(:names) { %w[S E] }
+      let(:size) { %w[N] }
+      let(:delim) { '-' }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'Ss = [None for _ in range(N)]',
+            'Es = [None for _ in range(N)]',
+            'for i in range(N):',
+            "    Ss[i], Es[i] = list(map(int, input().replace('-', ' ').split()))"
+          ]
+        )
+      end
+    end
   end
 
   describe '#generate' do
@@ -293,16 +379,16 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:formats) do
         [
           AtCoderFriends::Problem::InputFormat.new(
-            :single, :number, %w[N], []
+            container: :single, names: %w[N]
           ),
           AtCoderFriends::Problem::InputFormat.new(
-            :varray, :number, %w[x y], %w[N]
+            container: :varray, names: %w[x y], size: %w[N]
           ),
           AtCoderFriends::Problem::InputFormat.new(
-            :single, :string, %w[Q], []
+            container: :single, item: :string, names: %w[Q]
           ),
           AtCoderFriends::Problem::InputFormat.new(
-            :harray, :string, %w[a], %w[Q]
+            container: :harray, item: :string, names: %w[a], size: %w[Q]
           )
         ]
       end
@@ -345,7 +431,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:formats) do
         [
           AtCoderFriends::Problem::InputFormat.new(
-            :single, :number, %w[N Q], []
+            container: :single, names: %w[N Q]
           )
         ]
       end
@@ -381,7 +467,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
         let(:formats) do
           [
             AtCoderFriends::Problem::InputFormat.new(
-              :single, :number, %w[N], []
+              container: :single, names: %w[N]
             )
           ]
         end

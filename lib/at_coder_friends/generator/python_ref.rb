@@ -62,14 +62,14 @@ module AtCoderFriends
       def gen_single_decl(inpdef)
         names = inpdef.names
         dcl = names.join(', ')
-        expr = gen_expr(inpdef.item, names.size > 1)
+        expr = gen_expr(inpdef, names.size > 1)
         "#{dcl} = #{expr}"
       end
 
       def gen_harray_decl(inpdef)
         v = inpdef.names[0]
         dcl = "#{v}s"
-        expr = gen_expr(inpdef.item, true)
+        expr = gen_expr(inpdef, true)
         "#{dcl} = #{expr}"
       end
 
@@ -85,7 +85,7 @@ module AtCoderFriends
         v = inpdef.names[0]
         sz = inpdef.size[0]
         dcl = "#{v}s"
-        expr = gen_expr(inpdef.item, false)
+        expr = gen_expr(inpdef, false)
         "#{dcl} = [#{expr} for _ in range(#{sz})]"
       end
 
@@ -93,7 +93,7 @@ module AtCoderFriends
         names = inpdef.names
         sz = inpdef.size[0]
         dcl = names.map { |v| "#{v}s[i]" }.join(', ')
-        expr = gen_expr(inpdef.item, true)
+        expr = gen_expr(inpdef, true)
         ret = []
         ret += names.map { |v| "#{v}s = [None for _ in range(#{sz})]" }
         ret << "for i in range(#{sz}):"
@@ -105,7 +105,7 @@ module AtCoderFriends
         v = inpdef.names[0]
         sz = inpdef.size[0]
         decl = "#{v}ss"
-        expr = gen_expr(inpdef.item, true)
+        expr = gen_expr(inpdef, true)
         "#{decl} = [#{expr} for _ in range(#{sz})]"
       end
 
@@ -117,7 +117,7 @@ module AtCoderFriends
         dcls = vs.map { |v| "#{v}[i]" }
         dcls[mx] = '*' + dcls[mx] unless inpdef.item == :char
         dcl = dcls.join(', ')
-        expr = gen_cmb_expr(inpdef.item)
+        expr = gen_cmb_expr(inpdef)
         ret = []
         ret += vs.map { |v| "#{v} = [None for _ in range(#{sz})]" }
         ret << "for i in range(#{sz}):"
@@ -129,7 +129,7 @@ module AtCoderFriends
         names = inpdef.names
         sz1, sz2 = inpdef.size
         dcl = names.map { |v| "#{v}ss[i][j]" }.join(', ')
-        expr = gen_expr(inpdef.item, true)
+        expr = gen_expr(inpdef, true)
         ret = []
         ret += names.map do |v|
           "#{v}ss = [[None for _ in range(#{sz2})] for _ in range(#{sz1})]"
@@ -144,7 +144,7 @@ module AtCoderFriends
         names = inpdef.names
         sz = inpdef.size[0]
         dcls = names.map { |v| "#{v}ss[i]" }
-        expr = gen_expr(inpdef.item, true)
+        expr = gen_expr(inpdef, true)
         ret = []
         ret += names.map { |v| "#{v}ss = [None for _ in range(#{sz})]" }
         ret << "for i in range(#{sz}):"
@@ -155,24 +155,35 @@ module AtCoderFriends
         ret
       end
 
-      def gen_expr(item, split)
-        case item
+      def gen_expr(inpdef, split)
+        read = gen_read(inpdef.delim)
+        case inpdef.item
         when :number
-          split ? 'list(map(int, input().split()))' : 'int(input())'
+          split ? "list(map(int, #{read}.split()))" : "int(#{read})"
+        when :decimal
+          split ? "list(map(float, #{read}.split()))" : "float(#{read})"
         when :string
-          split ? 'input().split()' : 'input()'
+          split ? "#{read}.split()" : read
         when :char
-          'input()'
+          read
         end
       end
 
-      def gen_cmb_expr(item)
-        case item
+      def gen_cmb_expr(inpdef)
+        read = gen_read(inpdef.delim)
+        case inpdef.item
         when :number
-          'list(map(int, input().split()))'
+          "list(map(int, #{read}.split()))"
+        when :decimal
+          "list(map(float, #{read}.split()))"
         when :string, :char
-          'input().split()'
+          "#{read}.split()"
         end
+      end
+
+      def gen_read(delim)
+        sub = delim.chars.map { |d| ".replace('#{d}', ' ')" }.join
+        "input()#{sub}"
       end
     end
   end
