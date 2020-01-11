@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'at_coder_friends'
+# Coverage support needs to be required *before* the RuboCop code is required!
+require 'support/coverage'
 require 'at_coder_friends/generator/python_ref'
 
 RSpec.configure do |config|
