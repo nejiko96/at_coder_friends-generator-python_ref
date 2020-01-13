@@ -269,6 +269,23 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       end
     end
 
+    context 'for a vertical array and a matrix of decimals' do
+      let(:container) { :varray_matrix }
+      let(:item) { :decimal }
+      let(:names) { %w[K A] }
+      let(:size) { %w[N K_N] }
+      it 'generates decl' do
+        expect(subject).to match(
+          [
+            'Ks = [None for _ in range(N)]',
+            'Ass = [None for _ in range(N)]',
+            'for i in range(N):',
+            '    Ks[i], *Ass[i] = list(map(float, input().split()))'
+          ]
+        )
+      end
+    end
+
     context 'for a vertical array and a matrix of characters' do
       let(:container) { :varray_matrix }
       let(:item) { :char }
