@@ -1,6 +1,8 @@
 # Change log
 
 ## master (unreleased)
+### Changed
+- Minor changes in ERBs.
 
 ## 0.2.0 (2020-01-05)
 
