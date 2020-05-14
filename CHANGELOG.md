@@ -1,8 +1,14 @@
 # Change log
 
 ## master (unreleased)
+
+## 0.3.0 (2020-05-15)
+
+### Added
+- python 3.8.2 support - use underscore separator in number literal(#7)
+
 ### Changed
-- Minor changes in ERBs.
+- Minor changes in ERBs.(#6)
 
 ## 0.2.0 (2020-01-05)
 
