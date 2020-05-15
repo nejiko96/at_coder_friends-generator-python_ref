@@ -31,7 +31,8 @@ module AtCoderFriends
       end
 
       def gen_mod(c)
-        v = c.value.gsub('^', '**').gsub(',', '_')
+        # underscores in numeric literals is available from Python3.6
+        v = c.value.gsub('^', '**').gsub(',', '')
         "MOD = #{v}"
       end
 

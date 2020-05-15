@@ -30,7 +30,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
     it 'generates constant decls' do
       expect(subject).to match(
         [
-          'MOD = 998_244_353'
+          'MOD = 998244353'
         ]
       )
     end
