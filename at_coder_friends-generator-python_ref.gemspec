@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'at_coder_friends/generator/python_ref/version'
+require_relative 'lib/at_coder_friends/generator/python_ref/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'at_coder_friends-generator-python_ref'
