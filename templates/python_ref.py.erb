@@ -1,13 +1,15 @@
 # <%= pbm.url %>
 
-<% gen_consts.each do |const| %><%= const %>
-<% end %>
-<% gen_decls.each do |dcl| %><%= dcl %>
-<% end %>
-<%
-if (vs = pbm.options.binary_values)
-%>print('<%= vs[0] %>' if cond else '<%= vs[1] %>')<%
-else
-%>print(ans)<%
-end
-%>
+<% gen_consts.each do |line| -%>
+<%= line %>
+<% end -%>
+
+<% gen_decls.each do |line| -%>
+<%= line %>
+<% end -%>
+
+<% if (vs = pbm.options.binary_values) -%>
+print('<%= vs[0] %>' if cond else '<%= vs[1] %>')
+<% else -%>
+print(ans)
+<% end -%>
