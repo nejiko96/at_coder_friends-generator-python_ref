@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 ### Changed
-- Minor changes in ERBs.
+- use -%> in ERB. (available in next release of AtCoderFriends.)
 
 ## 0.2.0 (2020-01-05)
 

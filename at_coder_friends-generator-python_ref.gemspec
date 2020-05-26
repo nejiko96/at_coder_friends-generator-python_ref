@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'at_coder_friends/generator/python_ref/version'
+require_relative 'lib/at_coder_friends/generator/python_ref/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'at_coder_friends-generator-python_ref'
@@ -12,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Python generator for AtCoderFriends'
   spec.description   = <<-DESCRIPTION
-  Python source generator works as a plugin for AtCoderFriends
+  Python source generator plugin for AtCoderFriends
   (reference implementation)
   DESCRIPTION
   spec.homepage      = 'https://github.com/nejiko96/at_coder_friends-generator-python_ref'
@@ -35,10 +33,10 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     'homepage_uri' => spec.homepage,
     'source_code_uri' => spec.homepage,
-    'changelog_uri' => 'https://github.com/nejiko96/at_coder_friends-generator-python_ref/blob/master/CHANGELOG.md'
+    'changelog_uri' => spec.homepage + '/blob/master/CHANGELOG.md'
   }
 
-  spec.add_dependency 'at_coder_friends', '~> 0.6.3'
+  spec.add_dependency 'at_coder_friends', '~> 0.6.5'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'
