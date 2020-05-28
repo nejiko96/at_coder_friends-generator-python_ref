@@ -1,11 +1,12 @@
 # Change log
 
 ## master (unreleased)
+
+## 0.3.0 (2020-05-29)
 ### Changed
 - use -%> in ERB. (available in next release of AtCoderFriends.)
 
 ## 0.2.0 (2020-01-05)
-
 ### Added
 - at_coder_friends 0.6.3 support
 - 'vertical array + matrix' input format support.
