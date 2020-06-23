@@ -1,6 +1,9 @@
 # Change log
 
 ## master (unreleased)
+### Added
+- python 3.8.2 support - use underscore separator in number literal
+
 ### Deleted
 - drop Ruby2.3 from target version.
 
