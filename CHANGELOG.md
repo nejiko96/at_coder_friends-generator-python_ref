@@ -1,6 +1,8 @@
 # Change log
 
 ## master (unreleased)
+
+## 0.3.1 (2020/12/20)
 ### Added
 - python 3.8.2 support - use underscore separator in number literal
 
