@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    at_coder_friends-generator-python_ref (0.3.1)
+    at_coder_friends-generator-python_ref (0.3.2)
       at_coder_friends (~> 0.6.8)
 
 GEM
