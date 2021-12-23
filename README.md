@@ -1,3 +1,9 @@
+[![Gem Version](https://badge.fury.io/rb/at_coder_friends-generator-python_ref.svg)](https://badge.fury.io/rb/at_coder_friends-generator-python_ref)
+![Gem](https://img.shields.io/gem/dt/at_coder_friends-generator-python_ref)
+[![Ruby](https://github.com/nejiko96/at_coder_friends-generator-python_ref/actions/workflows/ruby.yml/badge.svg)](https://github.com/nejiko96/at_coder_friends-generator-python_ref/actions/workflows/ruby.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0775ef9da0798b73beb4/maintainability)](https://codeclimate.com/github/nejiko96/at_coder_friends-generator-python_ref/maintainability)
+![GitHub](https://img.shields.io/github/license/nejiko96/at_coder_friends-generator-python_ref)
+
 # AtCoderFriends::Generator::PythonRef
 
 Python source generator for [AtCoderFriends](https://github.com/nejiko96/at_coder_friends).  
