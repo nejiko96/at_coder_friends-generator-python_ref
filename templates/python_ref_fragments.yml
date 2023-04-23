@@ -1,0 +1,60 @@
+constant:
+  value_print: <%= value.gsub('^', '**').gsub(',', '_') %>
+  mod: MOD = <%= value_print %>
+declaration:
+  read: input()<% delims.each do |d| %>.replace('<%= d %>', ' ')<% end %>
+  input:
+    number:
+      single: int(<%= read %>)
+      multi: list(map(int, <%= read %>.split()))
+    decimal:
+      single: float(<%= read %>)
+      multi: list(map(float, <%= read %>.split()))
+    string:
+      single: <%= read %>
+      multi: <%= read %>.split()
+    char:
+      single: <%= read %>
+      multi: <%= read %>.split()
+  splat: <% unless item == :char %>*<% end %>
+  main:
+    single: <%= vs.join(', ') %> = <%= input %>
+    harray: <%= v %>s = <%= input %>
+    varray_1: <%= v %>s = [<%= input %> for _ in range(<%= sz %>)]
+    varray_n: |
+      <% vs.each do |v| -%>
+      <%= v %>s = [None for _ in range(<%= sz %>)]
+      <% end -%>
+      for i in range(<%= sz %>):
+          <%= vs.map { |v| "#{v}s[i]" }.join(', ') %> = <%= input %>
+    matrix: <%= v %>ss = [<%= input %> for _ in range(<%= sz %>)]
+    varray_matrix: |
+      <% vs[0..-2].each do |v| -%>
+      <%= v %>s = [None for _ in range(<%= sz %>)]
+      <% end -%>
+      <%= vs[-1] %>ss = [None for _ in range(<%= sz %>)]
+      for i in range(<%= sz %>):
+          <%= vs[0..-2].map { |v| "#{v}s[i]" }.join(', ') %>, <%= splat %><%= vs[-1] %>ss[i] = <%= input %>
+    matrix_varray: |
+      <%= vs[0] %>ss = [None for _ in range(<%= sz %>)]
+      <% vs[1..-1].each do |v| -%>
+      <%= v %>s = [None for _ in range(<%= sz %>)]
+      <% end -%>
+      for i in range(<%= sz %>):
+          <%= splat %><%= vs[0] %>ss[i], <%= vs[1..-1].map { |v| "#{v}s[i]" }.join(', ') %> = <%= input %>
+    vmatrix: |
+      <% vs.each do |v| -%>
+      <%= v %>ss = [[None for _ in range(<%= sz2 %>)] for _ in range(<%= sz1 %>)]
+      <% end -%>
+      for i in range(<%= sz1 %>):
+          for j in range(<%= sz2 %>):
+              <%= vs.map { |v| "#{v}ss[i][j]" }.join(', ') %> = <%= input %>
+    hmatrix: |
+      <% vs.each do |v| -%>
+      <%= v %>ss = [None for _ in range(<%= sz %>)]
+      <% end -%>
+      for i in range(<%= sz %>):
+          line = <%= input %>
+      <% vs.each_with_index do |v, k| -%>
+          <%= v %>ss[i] = line[<%= k %>::<%= vs.size %>]
+      <% end -%>

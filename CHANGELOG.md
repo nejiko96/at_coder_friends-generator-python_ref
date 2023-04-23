@@ -3,6 +3,8 @@
 ## master (unreleased)
 ### Added
 - add Ruby3.2 to target version.
+### Changed
+- externalize code fragments to YAML
 ### Deleted
 - drop Ruby2.5 from target version.
 
