@@ -34,10 +34,10 @@ Add ```PythonRef``` to ```generators``` setting in ```.at_coder_friends.yml```
 Following options are available  
 in ```generator_settings/PythonRef``` section of ```.at_coder_friends.yml```:
 
-| Setting | Description  | Default |
+| Option  | Description  | Default |
 |---------|--------------|---------|
 |file_ext |File extension|py       |
-|default_template|Source template file path|[/templates/python_ref.py.erb](/templates/python_ref.py.erb)|
+|template (formerly default_template)|Source template file path|[/templates/python_ref.py.erb](/templates/python_ref.py.erb)|
 
 ## ```.at_coder_friends.yml``` example for Python
   ```YAML
@@ -45,7 +45,7 @@ in ```generator_settings/PythonRef``` section of ```.at_coder_friends.yml```:
     - PythonRef
   generator_settings:
     PythonRef:
-      default_template: /path/to/template
+      template: /path/to/template
   ext_settings:
     'py':
       test_cmd:

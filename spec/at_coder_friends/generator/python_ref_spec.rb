@@ -167,13 +167,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[A B] }
       let(:size) { %w[N] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'As = [None for _ in range(N)]',
-            'Bs = [None for _ in range(N)]',
-            'for i in range(N):',
-            '    As[i], Bs[i] = list(map(int, input().split()))'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            As = [None for _ in range(N)]
+            Bs = [None for _ in range(N)]
+            for i in range(N):
+                As[i], Bs[i] = list(map(int, input().split()))
+          SRC
         )
       end
     end
@@ -184,13 +184,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[A B] }
       let(:size) { %w[N] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'As = [None for _ in range(N)]',
-            'Bs = [None for _ in range(N)]',
-            'for i in range(N):',
-            '    As[i], Bs[i] = list(map(float, input().split()))'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            As = [None for _ in range(N)]
+            Bs = [None for _ in range(N)]
+            for i in range(N):
+                As[i], Bs[i] = list(map(float, input().split()))
+          SRC
         )
       end
     end
@@ -201,13 +201,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[A B] }
       let(:size) { %w[N] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'As = [None for _ in range(N)]',
-            'Bs = [None for _ in range(N)]',
-            'for i in range(N):',
-            '    As[i], Bs[i] = input().split()'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            As = [None for _ in range(N)]
+            Bs = [None for _ in range(N)]
+            for i in range(N):
+                As[i], Bs[i] = input().split()
+          SRC
         )
       end
     end
@@ -258,13 +258,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[K A] }
       let(:size) { %w[N K_N] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'Ks = [None for _ in range(N)]',
-            'Ass = [None for _ in range(N)]',
-            'for i in range(N):',
-            '    Ks[i], *Ass[i] = list(map(int, input().split()))'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            Ks = [None for _ in range(N)]
+            Ass = [None for _ in range(N)]
+            for i in range(N):
+                Ks[i], *Ass[i] = list(map(int, input().split()))
+          SRC
         )
       end
     end
@@ -275,13 +275,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[K A] }
       let(:size) { %w[N K_N] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'Ks = [None for _ in range(N)]',
-            'Ass = [None for _ in range(N)]',
-            'for i in range(N):',
-            '    Ks[i], *Ass[i] = list(map(float, input().split()))'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            Ks = [None for _ in range(N)]
+            Ass = [None for _ in range(N)]
+            for i in range(N):
+                Ks[i], *Ass[i] = list(map(float, input().split()))
+          SRC
         )
       end
     end
@@ -292,13 +292,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[K p] }
       let(:size) { %w[Q 26] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'Ks = [None for _ in range(Q)]',
-            'pss = [None for _ in range(Q)]',
-            'for i in range(Q):',
-            '    Ks[i], pss[i] = input().split()'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            Ks = [None for _ in range(Q)]
+            pss = [None for _ in range(Q)]
+            for i in range(Q):
+                Ks[i], pss[i] = input().split()
+          SRC
         )
       end
     end
@@ -309,13 +309,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[city cost] }
       let(:size) { %w[M 2] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'cityss = [None for _ in range(M)]',
-            'costs = [None for _ in range(M)]',
-            'for i in range(M):',
-            '    *cityss[i], costs[i] = list(map(int, input().split()))'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            cityss = [None for _ in range(M)]
+            costs = [None for _ in range(M)]
+            for i in range(M):
+                *cityss[i], costs[i] = list(map(int, input().split()))
+          SRC
         )
       end
     end
@@ -326,14 +326,14 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[idol p] }
       let(:size) { %w[1 C_1] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'idolss = [[None for _ in range(C_1)] for _ in range(1)]',
-            'pss = [[None for _ in range(C_1)] for _ in range(1)]',
-            'for i in range(1):',
-            '    for j in range(C_1):',
-            '        idolss[i][j], pss[i][j] = list(map(int, input().split()))'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            idolss = [[None for _ in range(C_1)] for _ in range(1)]
+            pss = [[None for _ in range(C_1)] for _ in range(1)]
+            for i in range(1):
+                for j in range(C_1):
+                    idolss[i][j], pss[i][j] = list(map(int, input().split()))
+          SRC
         )
       end
     end
@@ -344,15 +344,15 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:names) { %w[x y] }
       let(:size) { %w[Q 2] }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'xss = [None for _ in range(Q)]',
-            'yss = [None for _ in range(Q)]',
-            'for i in range(Q):',
-            '    line = list(map(int, input().split()))',
-            '    xss[i] = line[0::2]',
-            '    yss[i] = line[1::2]'
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            xss = [None for _ in range(Q)]
+            yss = [None for _ in range(Q)]
+            for i in range(Q):
+                line = list(map(int, input().split()))
+                xss[i] = line[0::2]
+                yss[i] = line[1::2]
+          SRC
         )
       end
     end
@@ -364,13 +364,13 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
       let(:size) { %w[N] }
       let(:delim) { '-' }
       it 'generates decl' do
-        expect(subject).to match(
-          [
-            'Ss = [None for _ in range(N)]',
-            'Es = [None for _ in range(N)]',
-            'for i in range(N):',
-            "    Ss[i], Es[i] = list(map(int, input().replace('-', ' ').split()))"
-          ]
+        expect(subject).to eq(
+          <<~SRC
+            Ss = [None for _ in range(N)]
+            Es = [None for _ in range(N)]
+            for i in range(N):
+                Ss[i], Es[i] = list(map(int, input().replace('-', ' ').split()))
+          SRC
         )
       end
     end
@@ -463,7 +463,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
 
       it 'generates source' do
         expect(subject).to eq(
-          <<~'SRC'
+          <<~SRC
             # https://atcoder.jp/contests/practice/tasks/practice_2
 
             MOD = 2**32
@@ -498,7 +498,7 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
 
         it 'generates source' do
           expect(subject).to eq(
-            <<~'SRC'
+            <<~SRC
               # https://atcoder.jp/contests/abc006/tasks/abc006_1
 
 
