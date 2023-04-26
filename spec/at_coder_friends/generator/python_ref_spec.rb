@@ -406,6 +406,12 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
           ),
           AtCoderFriends::Problem::InputFormat.new(
             container: :harray, item: :string, names: %w[a], size: %w[Q]
+          ),
+          AtCoderFriends::Problem::InputFormat.new(
+            container: :varray_matrix,
+            item: :number,
+            names: %w[K A],
+            size: %w[N K_N]
           )
         ]
       end
@@ -432,6 +438,10 @@ RSpec.describe AtCoderFriends::Generator::PythonRef do
                 xs[i], ys[i] = list(map(int, input().split()))
             Q = input()
             as = input().split()
+            Ks = [None for _ in range(N)]
+            Ass = [None for _ in range(N)]
+            for i in range(N):
+                Ks[i], *Ass[i] = list(map(int, input().split()))
 
             print(ans)
           SRC

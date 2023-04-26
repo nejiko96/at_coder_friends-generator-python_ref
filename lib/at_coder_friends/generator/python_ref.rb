@@ -46,9 +46,9 @@ module AtCoderFriends
 
       ACF_HOME = File.realpath(File.join(__dir__, '..', '..', '..'))
       TMPL_DIR = File.join(ACF_HOME, 'templates')
-      DEFAULT_TMPL = File.join(TMPL_DIR, 'python_ref.py.erb')
+      TEMPLATE = File.join(TMPL_DIR, 'python_ref.py.erb')
       FRAGMENTS = File.realpath(File.join(TMPL_DIR, 'python_ref_fragments.yml'))
-      ATTRS = Attributes.new(:py, DEFAULT_TMPL, FRAGMENTS)
+      ATTRS = Attributes.new(:py, TEMPLATE, FRAGMENTS)
 
       def attrs
         ATTRS
