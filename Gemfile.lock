@@ -37,14 +37,10 @@ GEM
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0218.1)
-    mini_portile2 (2.8.1)
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    nokogiri (1.14.3)
-      mini_portile2 (~> 2.8.0)
-      racc (~> 1.4)
-    nokogiri (1.14.3-x64-mingw32)
+    nokogiri (1.14.3-arm64-darwin)
       racc (~> 1.4)
     public_suffix (5.0.1)
     racc (1.6.2)
@@ -72,13 +68,11 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    unf_ext (0.0.8.2-x64-mingw32)
     webrick (1.8.1)
     webrobots (0.1.2)
 
 PLATFORMS
-  ruby
-  x64-mingw32
+  arm64-darwin-20
 
 DEPENDENCIES
   at_coder_friends-generator-python_ref!
@@ -88,4 +82,4 @@ DEPENDENCIES
   simplecov (~> 0.10)
 
 BUNDLED WITH
-   2.1.4
+   2.4.12
