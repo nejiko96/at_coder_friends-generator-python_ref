@@ -10,7 +10,8 @@ module AtCoderFriends
     # generates Python source from problem description
     class PythonRef < Base
       include PythonRefConstants
-      include CommonFragmentMixin
+      include ConstFragmentMixin
+      include DeclFragmentMixin
 
       ACF_HOME = File.realpath(File.join(__dir__, '..', '..', '..'))
       TMPL_DIR = File.join(ACF_HOME, 'templates')
