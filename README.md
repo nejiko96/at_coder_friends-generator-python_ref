@@ -27,19 +27,20 @@ Or install it yourself as:
 
 ## Configuration
 
-Add ```PythonRef``` to ```generators``` setting in ```.at_coder_friends.yml```
+Add `PythonRef` to `generators` setting in `.at_coder_friends.yml`
 
 ## Generator Options
 
 Following options are available  
-in ```generator_settings/PythonRef``` section of ```.at_coder_friends.yml```:
+in `generator_settings/PythonRef` section of `.at_coder_friends.yml`:
 
-| Option  | Description  | Default |
-|---------|--------------|---------|
-|file_ext |File extension|py       |
-|template (formerly default_template)|Source template file path|[/templates/python_ref.py.erb](/templates/python_ref.py.erb)|
+| Option   | Description    | Default |
+| -------- | -------------- | ------- |
+| file_ext | File extension | py      |
+| template<br>(formerly default_template) | Code template file path | [python_ref.py.erb](/templates/python_ref.py.erb) |
+| fragments | Code fragments file path | [python_ref_fragments.yml](/templates/python_ref_fragments.yml) |
 
-## ```.at_coder_friends.yml``` example for Python
+## `.at_coder_friends.yml` example for Python
   ```YAML
   generators:
     - PythonRef
